@@ -1,0 +1,29 @@
+﻿<Window x:Class="markevaluator.parser_window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:markevaluator"
+        mc:Ignorable="d"
+        Title="parser_window" Height="383" Width="384" ResizeMode="NoResize" BorderThickness="1" BorderBrush="{DynamicResource ApplicationThemeLight}" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="WhiteSmoke" Offset="1"/>
+                <GradientStop Color="White"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Label x:Name="label" Content="Excel Worksheet Validator" VerticalAlignment="Top" Foreground="#FF797979" Padding="8,5,5,5" Background="White" Height="28" VerticalContentAlignment="Center" MouseDown="label_MouseDown"/>
+        <TextBox x:Name="txtOut" Style="{StaticResource txtBoxStyle}" Margin="10,110,10,42" TextWrapping="Wrap" IsReadOnlyCaretVisible="True" Padding="2" Focusable="False" VerticalScrollBarVisibility="Auto" Cursor="Arrow"/>
+        <Button x:Name="btnCancel" Style="{StaticResource defaultButtonStyle}" Content="X" Margin="0,-1,10,0" Height="29" VerticalAlignment="Top" Click="btnCancel_Click" HorizontalAlignment="Right" Width="30" FontSize="14"/>
+        <Button x:Name="btnBrowseFile" Style="{StaticResource defaultButtonStyle}" Content="Browse" Margin="10,69,0,0" VerticalAlignment="Top" Height="30" Click="btnBrowseFile_Click" FontSize="14" HorizontalAlignment="Left" Width="67"/>
+        <StatusBar Background="#FFE8E8E8" Height="29" VerticalAlignment="Bottom" BorderThickness="0,0,0,0" BorderBrush="#FFAFAFAF">
+            <Label x:Name="lblFileSize" Content="File Size: 0" Background="{x:Null}" Height="24"/>
+            <Separator Width="1"/>
+            <Label Content="Progress" Background="{x:Null}" Height="24" Padding="5,4,5,0"/>
+            <ProgressBar x:Name="prgsbar" Foreground="{DynamicResource ApplicationThemeLight}" Height="20" Width="100"/>
+        </StatusBar>
+        <Label x:Name="lblTitle" Content="Please select a file to continue..." Margin="7,33,10,0" VerticalAlignment="Top" Foreground="{DynamicResource ApplicationThemeLight}" FontSize="16"/>
+        <Label x:Name="lblSelectedFile" Content="*.xlsx" HorizontalAlignment="Left" Height="30" Margin="92,69,0,0" VerticalAlignment="Top" Width="272" VerticalContentAlignment="Bottom" FontSize="14" BorderThickness="0,0,0,1" BorderBrush="#FFADADAD"/>
+    </Grid>
+</Window>

@@ -1,0 +1,67 @@
+﻿<Window x:Class="markevaluator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:markevaluator"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="391" Width="439" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" BorderThickness="1" BorderBrush="{DynamicResource ApplicationThemeLight}" Background="White">
+    <Grid RenderTransformOrigin="0.5,0.5">
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="{DynamicResource ApplicationThemeLight}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}" BorderBrush="#FFACACAC" BorderThickness="0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="Chocolate"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+        <Grid.Background>
+            <ImageBrush ImageSource="images/watermark-light-gray.png" Stretch="Uniform" Opacity="0.85">
+                <ImageBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleY="1"/>
+                        <SkewTransform AngleY="0" AngleX="0" CenterY="0.5" CenterX="0.5"/>
+                        <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </ImageBrush.RelativeTransform>
+            </ImageBrush>
+        </Grid.Background>
+        <Label x:Name="lblBanner" Content="School of Information Sciences" Height="59" Margin="0,31,0,0" FontSize="24" FontWeight="Thin" VerticalAlignment="Top" Foreground="White" VerticalContentAlignment="Center" Padding="15,5,5,5">
+            <Label.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="Gray" Offset="1"/>
+                    <GradientStop Color="White"/>
+                </LinearGradientBrush>
+            </Label.Background>
+        </Label>
+        <Label x:Name="label1" Content="User Name" HorizontalAlignment="Left" Margin="56,166,0,0" Width="88" FontSize="14" Height="28" VerticalAlignment="Top"/>
+        <Label x:Name="label2" Content="Password" HorizontalAlignment="Left" Margin="56,231,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.947,1.115" Width="88" FontSize="14"/>
+        <TextBox x:Name="txtUsername" Style="{StaticResource txtBoxModernStyle}" Height="34" Margin="149,162,58,0" TextWrapping="Wrap" VerticalAlignment="Top" VerticalContentAlignment="Center" SelectionBrush="#FFC9C9C9" OpacityMask="#FFB9B9B9" Padding="2,0,0,0" FontSize="14" Foreground="#FF444444" KeyUp="txtUsername_KeyUp" TabIndex="1"/>
+        <PasswordBox x:Name="txtPassword" Style="{StaticResource psdBoxStyle}" Height="35" Margin="149,227,58,0" VerticalAlignment="Top" OpacityMask="Black" Padding="2,0,0,0" VerticalContentAlignment="Center" FontSize="14" SelectionBrush="#FFC9C9C9" Foreground="#FF444444" TabIndex="2"/>
+        <Button x:Name="button" Style="{StaticResource defaultButtonStyle}" Content="Login" Height="40" Margin="0,0,30,18" VerticalAlignment="Bottom" FontSize="14" Cursor="Hand" Click="button_Click" HorizontalAlignment="Right" Width="107" TabIndex="3"/>
+        <Button x:Name="button1" Content="X" Style="{StaticResource windowControlButtonStyle}" Margin="401,0,0,0" VerticalAlignment="Top" Height="30" Click="button1_Click" Cursor="Hand" FontFamily="Arial" FontSize="14" RenderTransformOrigin="-0.079,0.433"/>
+        <TextBlock TextWrapping="Wrap" Text="Mark Evaluator 1.0" VerticalAlignment="Top" Height="30" Padding="10,6,0,0" Margin="0,0,34,0"/>
+        <TextBlock HorizontalAlignment="Left" Margin="14,110,0,0" TextWrapping="Wrap" Text="Administrator Login" VerticalAlignment="Top" Height="38" Width="275" Foreground="{DynamicResource ApplicationThemeLight}" FontSize="18"/>
+    </Grid>
+</Window>

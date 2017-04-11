@@ -1,0 +1,42 @@
+﻿<Window x:Class="markevaluator.generator_window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:markevaluator"
+        mc:Ignorable="d"
+        Title="generator_window" Height="590" Width="368" ResizeMode="NoResize" BorderThickness="1" BorderBrush="{DynamicResource ApplicationThemeLight}" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" MinWidth="368" MinHeight="590">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="WhiteSmoke" Offset="1"/>
+                <GradientStop Color="White"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Label x:Name="label" Content="Worksheet Generator" VerticalAlignment="Top" Foreground="#FF797979" Padding="8,5,5,5" Background="White" Height="28" VerticalContentAlignment="Center" MouseDown="label_MouseDown"/>
+        <Button x:Name="btnClose" Style="{StaticResource defaultButtonStyle}" Content="X" Margin="0,-1,10,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Right" Width="30" FontSize="14" Click="btnClose_Click"/>
+        <Label Content="Select a option" HorizontalAlignment="Left" Margin="4,31,0,0" VerticalAlignment="Top" Height="30" Width="188" FontSize="16" Foreground="{DynamicResource ApplicationThemeLight}"/>
+        <RadioButton x:Name="rdoGradeSheet" Content="Result Sheet" HorizontalAlignment="Left" Height="24" Margin="10,66,0,0" VerticalAlignment="Top" Width="110" VerticalContentAlignment="Center" FontSize="14" IsChecked="True" GroupName="resultType"/>
+        <RadioButton x:Name="rdoMarkSheet" Content="Individual Grade Sheets" HorizontalAlignment="Left" Height="24" Margin="143,66,0,0" VerticalAlignment="Top" Width="185" VerticalContentAlignment="Center" FontSize="14" GroupName="resultType"/>
+        <Label Content="Select output folder" HorizontalAlignment="Left" Margin="4,94,0,0" VerticalAlignment="Top" Height="30" Width="188" FontSize="16" Foreground="{DynamicResource ApplicationThemeLight}"/>
+        <Button x:Name="btnBrowseFolder" Style="{StaticResource defaultButtonStyle}" Content="Browse" Margin="10,129,0,0" VerticalAlignment="Top" Height="30" FontSize="14" HorizontalAlignment="Left" Width="67" Click="btnBrowseFolder_Click"/>
+        <Label x:Name="lblOutputFolder" Content="" HorizontalAlignment="Left" Height="30" Margin="88,129,0,0" VerticalAlignment="Top" Width="258" VerticalContentAlignment="Bottom" FontSize="14" BorderThickness="0,0,0,1" BorderBrush="#FFADADAD"/>
+        <ComboBox x:Name="cbxCourse" Style="{StaticResource ComboBoxFlatStyle}" HorizontalAlignment="Left" Margin="10,173,0,0" Width="160" IsEditable="True" VerticalContentAlignment="Center" Text="-- SELECT COURSE --" Height="30" VerticalAlignment="Top" SelectionChanged="cbxCourse_SelectionChanged"/>
+        <ComboBox x:Name="cbxSemester" Style="{StaticResource ComboBoxFlatStyle}" HorizontalAlignment="Left" Margin="10,214,0,0" Width="110" IsEditable="True" VerticalContentAlignment="Center" Text="-- SEMESTER --" Height="30" VerticalAlignment="Top" SelectionChanged="cbxSemester_SelectionChanged"/>
+        <ComboBox x:Name="cbxYear" Style="{StaticResource ComboBoxFlatStyle}" HorizontalAlignment="Left" Margin="132,214,0,0" Width="98" Text="-- YEAR --" IsEditable="True" VerticalContentAlignment="Center" RenderTransformOrigin="0.173,0.467" Height="30" VerticalAlignment="Top" SelectionChanged="cbxYear_SelectionChanged"/>
+        <Button x:Name="btnGenerateSheet" Style="{StaticResource defaultButtonStyle}" Content="Generate" Margin="0,0,14,8" FontSize="14" Click="btnGenerateSheet_Click" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="78"/>
+        <TextBox x:Name="txtOutput" Style="{StaticResource txtBoxStyle}" IsReadOnlyCaretVisible="True" Padding="2" Focusable="False" Margin="10,356,12,46" TextWrapping="Wrap" Text="Process output..." VerticalScrollBarVisibility="Auto" Background="White"/>
+        <ProgressBar x:Name="progressOne" Foreground="{DynamicResource ApplicationThemeLight}" HorizontalAlignment="Left" Margin="11,0,0,10" Width="121" Height="27" VerticalAlignment="Bottom"/>
+        <ProgressBar x:Name="progressTwo" Foreground="{DynamicResource ApplicationThemeLight}" HorizontalAlignment="Left" Margin="139,0,0,10" Width="121" Height="27" VerticalAlignment="Bottom"/>
+        <ComboBox x:Name="cbxDegree" Style="{StaticResource ComboBoxFlatStyle}" HorizontalAlignment="Left" Margin="180,173,0,0" Width="166" IsEditable="True" VerticalContentAlignment="Center" Text="-- DEGREE TYPE --" Height="30" VerticalAlignment="Top">
+            <ComboBoxItem>Master of Engineering</ComboBoxItem>
+            <ComboBoxItem>Master of Science</ComboBoxItem>
+        </ComboBox>
+        <ComboBox x:Name="cbxMonth" Style="{StaticResource ComboBoxFlatStyle}" HorizontalAlignment="Left" Height="30" Margin="241,214,0,0" VerticalAlignment="Top" Width="105" Text="-- MONTH --" IsEditable="True" VerticalContentAlignment="Center"/>
+        <Label Content="Select a option" HorizontalAlignment="Left" Margin="4,248,0,0" VerticalAlignment="Top" Height="30" Width="116" FontSize="16" Foreground="{DynamicResource ApplicationThemeLight}"/>
+        <RadioButton x:Name="rdoAllStudents" Content="All students" HorizontalAlignment="Left" Height="24" Margin="10,282,0,0" VerticalAlignment="Top" Width="110" VerticalContentAlignment="Center" FontSize="14" IsChecked="True" Click="rdoAllStudents_Click" GroupName="forStudents"/>
+        <RadioButton x:Name="rdoCustomStudents" Content="Custom students list" HorizontalAlignment="Left" Height="24" Margin="143,282,0,0" VerticalAlignment="Top" Width="185" VerticalContentAlignment="Center" FontSize="14" Click="rdoCustomStudents_Click" GroupName="forStudents"/>
+        <Button x:Name="btnBrowseSheet" Style="{StaticResource defaultButtonStyle}" Content="Browse" Margin="10,314,0,0" VerticalAlignment="Top" Height="30" FontSize="14" HorizontalAlignment="Left" Width="67" IsEnabled="False" Click="btnBrowseSheet_Click"/>
+        <Label x:Name="lblSheetPath" Content="Custom students List.xlsx" HorizontalAlignment="Left" Height="30" Margin="88,314,0,0" VerticalAlignment="Top" Width="258" VerticalContentAlignment="Bottom" FontSize="14" BorderThickness="0,0,0,1" BorderBrush="#FFADADAD" IsEnabled="False"/>
+    </Grid>
+</Window>
