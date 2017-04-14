@@ -842,7 +842,7 @@ namespace markevaluator
                     }
 
                     //cgpa calculation
-                    rows = Medatabase.fetchRecords("SELECT SUM(credits) AS total_credits FROM subject_master WHERE course_code='" + Ecourse + "'");
+                    rows = Medatabase.fetchRecords("SELECT total_credits FROM course_master WHERE course_code='" + Ecourse + "'");
                     total_credits = Decimal.ToInt32((Decimal)rows[0].column["total_credits"]);
                     cgpa = (gpa / total_credits);
 
