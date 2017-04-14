@@ -89,9 +89,9 @@ namespace markevaluator
                     return;
                 }
 
-                if (columnCount > 3 || columnCount < 3)
+                if (columnCount > 4 || columnCount < 4)
                 {
-                    tempProcessLog += ln + "Expecting columns to be 3, " + columnCount + " is present." + ln + "This excelsheet is not meeting the desired format.";
+                    tempProcessLog += ln + "Expecting columns to be 4, " + columnCount + " is present." + ln + "This excelsheet is not meeting the desired format.";
 
                     App.Current.Dispatcher.Invoke(new System.Action(() =>
                     {
@@ -185,6 +185,21 @@ namespace markevaluator
                         else
                         {
                             tempProcessLog += ln + "empty value given for in semesters...'" + ln;
+                            isValid = false;
+                            invalidRows++;
+                        }
+                        if (courseWorksheet.Cells[i, 4].Value != null)
+                        {
+                            if((int)courseWorksheet.Cells[i, 4].Value < 1)
+                            {
+                                tempProcessLog += ln + "credits must be greater than 0";
+                                isValid = false;
+                                invalidRows++;
+                            }
+                        }
+                        else
+                        {
+                            tempProcessLog += ln + "empty value given for total credits...'" + ln;
                             isValid = false;
                             invalidRows++;
                         }
@@ -363,7 +378,7 @@ namespace markevaluator
             {
                 int sheetCount = 0;
                 int rowCount = 0, columnCount = 0, i;
-                int iSem = 0, tSem = 0;
+                int iSem = 0, tSem = 0, tCred = 0;
                 string cCode;
                 isValid = true;
 
@@ -386,10 +401,11 @@ namespace markevaluator
                     cCode = (string)courseWorksheet.Cells[i, 1].Value;
                     tSem = (int)courseWorksheet.Cells[i, 2].Value;
                     iSem = (int)courseWorksheet.Cells[i, 3].Value;
+                    tCred = (int)courseWorksheet.Cells[i, 4].Value;
 
                     tempProcessLog += ln + "> Processing Row: " + i + ln;
                     tempProcessLog += ln + "PUSHING > " + cCode + " | " + " | ts " + tSem + " | is " + iSem;
-                    recordsPushed += Medatabase.ExecuteQuery("INSERT INTO course_master VALUES('" + cCode + "'," + tSem + "," + iSem + ")");
+                    recordsPushed += Medatabase.ExecuteQuery("INSERT INTO course_master VALUES('" + cCode + "'," + tSem + "," + iSem + "," + tCred + ")");
 
                     //Update output textbox
                     App.Current.Dispatcher.Invoke(new System.Action(() =>
