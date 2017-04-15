@@ -283,7 +283,20 @@ namespace markevaluator
                             rows.Add(row);
 
                 List<String> sub_codes;
-                
+
+                //strip end slash if present
+                output_folder = (output_folder[output_folder.Length - 1] == '\\') ? output_folder.Substring(0, output_folder.Length - 1) : output_folder;
+
+                //create if "Results" directory exists
+                if (!Directory.Exists(output_folder + "\\Results"))
+                    Directory.CreateDirectory(output_folder + "\\Results");
+
+                output_folder = output_folder + "\\Results";
+
+                //create directory with course_code inside Results folder
+                if (!Directory.Exists(output_folder + "\\" + course_code))
+                    Directory.CreateDirectory(output_folder + "\\" + course_code);
+
                 tempProcessLog = "===== GENERATING INDIVIDUAL MARKSHEETS =====" + ln;
 
                 //cycle through each registration id
@@ -352,7 +365,7 @@ namespace markevaluator
                     objPara4.Range.Font.Bold = 1;
                     objPara4.Range.Text = "Registration No: " + (long)row.column["registration_id"];
                     pRng4.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
-                    pRng4.ParagraphFormat.SpaceAfter = 6.0F;
+                    pRng4.ParagraphFormat.SpaceAfter = 4.0F;
                     pRng4.ParagraphFormat.SpaceBefore = 4.0F;
                     objPara4.Range.InsertParagraphAfter();
 
@@ -366,7 +379,7 @@ namespace markevaluator
                     objPara5.Range.Font.Bold = 1;
                     objPara5.Range.Text = "Name                 : " + (String)rows2[0].column["name"];
                     pRng5.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
-                    pRng5.ParagraphFormat.SpaceAfter = 6.0F;
+                    pRng5.ParagraphFormat.SpaceAfter = 4.0F;
                     pRng5.ParagraphFormat.SpaceBefore = 4.0F;
                     objPara5.Range.InsertParagraphAfter();
 
@@ -417,7 +430,7 @@ namespace markevaluator
                     objTable.Cell(1, 3).Borders[Word.WdBorderType.wdBorderBottom].LineWidth = Word.WdLineWidth.wdLineWidth150pt;
                     objTable.Cell(1, 4).Borders[Word.WdBorderType.wdBorderBottom].LineWidth = Word.WdLineWidth.wdLineWidth150pt;
 
-                    //objTable.Rows[trows-1].Borders[Microsoft.Office.Interop.Word.WdBorderType.wdBorderBottom].LineWidth = Microsoft.Office.Interop.Word.WdLineWidth.wdLineWidth150pt;
+                    objTable.Rows[trows-1].Borders[Word.WdBorderType.wdBorderBottom].LineWidth = Word.WdLineWidth.wdLineWidth150pt;
                     objTable.Rows[trows].Borders[Word.WdBorderType.wdBorderBottom].LineWidth = Word.WdLineWidth.wdLineWidth150pt;
                     objTable.Borders[Word.WdBorderType.wdBorderBottom].LineWidth = Word.WdLineWidth.wdLineWidth150pt;
 
@@ -476,10 +489,7 @@ namespace markevaluator
                     objPara6.Range.Text = " GPA : " + String.Format("{0:0.00}", Convert.ToDouble(rows3[0].column["gpa"]));
                     objPara6.Range.InsertParagraphAfter();
 
-                    //strip end slash if present
-                    output_folder = (output_folder[output_folder.Length - 1] == '\\') ? output_folder.Substring(0, output_folder.Length - 1) : output_folder;
-
-                    output_filename = output_folder + "\\Results\\" + row.column["registration_id"].ToString() + "_" + rows2[0].column["name"].ToString() + "_" + row.column["year"].ToString() + ".docx";
+                    output_filename = output_folder + "\\" + course_code + "\\" + row.column["registration_id"].ToString() + "_" + rows2[0].column["name"].ToString() + "_" + row.column["year"].ToString() + ".docx";
                     objDoc.SaveAs(ref output_filename);
                     objDoc.Close(ref oMissing, ref oMissing, ref oMissing);
                     objWord.Quit(ref oMissing, ref oMissing, ref oMissing);
