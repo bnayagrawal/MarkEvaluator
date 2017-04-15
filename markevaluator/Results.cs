@@ -683,6 +683,10 @@ namespace markevaluator
 
                 output_folder = output_folder + "\\Results";
 
+                //create directory with course_code inside Results folder
+                if (!Directory.Exists(output_folder + "\\" + course_code))
+                    Directory.CreateDirectory(output_folder + "\\" + course_code);
+
                 //save the excel file
                 gradeWorkbook.SaveAs(output_folder + "\\" + course_code + "_" + month + "_" + year +".xlsx");
                 gradeWorkbook.Close();
