@@ -475,7 +475,7 @@ namespace markevaluator
                         xrow++; prog_two_value++;
                     }
 
-                    rows3 = Medatabase.fetchRecords("SELECT SUM(credits) AS total_credits FROM subject_master WHERE course_code='" + course_code + "'");
+                    rows3 = Medatabase.fetchRecords("SELECT total_credits FROM course_master WHERE course_code='" + course_code + "'");
                     objTable.Cell(xrow, 1).Range.Font.Bold = 1;
                     objTable.Cell(xrow, 1).RightPadding = 0.0f;
                     objTable.Cell(xrow, 1).Range.Text = "TOTAL  : ";
