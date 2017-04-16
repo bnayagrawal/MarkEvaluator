@@ -455,10 +455,17 @@ namespace markevaluator
                     }
 
                     xrow = 2;
+                    String elective = "";
                     foreach (String code in sub_codes)
                     {
                         rows3 = Medatabase.fetchRecords("SELECT name,credits FROM subject_master WHERE sub_code='" + code + "'");
-                        objTable.Cell(xrow, 2).Range.Text = ((String)rows3[0].column["name"]).ToUpper().Replace('_', '-');
+                        elective = objTable.Cell(xrow, 1).Range.Text; //subject code
+                        //if subject is elective
+                        if (elective.IndexOf(".") != -1)
+                            elective = "ELECTIVE - " + semester + " ";
+                        else
+                            elective = ""; //make empty
+                        objTable.Cell(xrow, 2).Range.Text = elective + ((String)rows3[0].column["name"]).ToUpper().Replace('_', '-');
                         objTable.Cell(xrow, 3).Range.Text = rows3[0].column["credits"].ToString();
                         objTable.Cell(xrow, 3).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
                         App.Current.Dispatcher.Invoke(new System.Action(() =>
