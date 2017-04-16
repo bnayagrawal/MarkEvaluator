@@ -1,16 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace markevaluator
 {
@@ -123,12 +115,12 @@ namespace markevaluator
 
             if (rdoGradeSheet.IsChecked == true)
                 if (rdoCustomStudents.IsChecked == false)
-                    (new Results()).generateGradeSheet(course, semester, year, month, output_folder);
+                    (new Results()).generateResultSheet(course, semester, year, month, output_folder);
                 else
                     (new Results()).getRegIdFromSheet(course, semester, month, year, fileName);
             else
                 if (rdoCustomStudents.IsChecked == false)
-                    (new Results()).generateMarkSheets(course, semester, year, month, output_folder, degree);
+                    (new Results()).generateGradeSheets(course, semester, year, month, output_folder, degree);
                 else
                     (new Results()).getRegIdFromSheet(course, semester, month, year, fileName);
         }
@@ -228,15 +220,15 @@ namespace markevaluator
             {
                 MessageBox.Show(message, "WARNING", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 if (rdoGradeSheet.IsChecked == true)
-                    (new Results()).generateGradeSheet(course, semester, year, month, output_folder, reg_id_list);
+                    (new Results()).generateResultSheet(course, semester, year, month, output_folder, reg_id_list);
                 else
-                    (new Results()).generateMarkSheets(course, semester, year, month, output_folder, degree, reg_id_list);
+                    (new Results()).generateGradeSheets(course, semester, year, month, output_folder, degree, reg_id_list);
             }
             else
                 if (rdoGradeSheet.IsChecked == true)
-                    (new Results()).generateGradeSheet(course, semester, year, month, output_folder, reg_id_list);
+                    (new Results()).generateResultSheet(course, semester, year, month, output_folder, reg_id_list);
                 else
-                    (new Results()).generateMarkSheets(course, semester, year, month, output_folder, degree, reg_id_list);
+                    (new Results()).generateGradeSheets(course, semester, year, month, output_folder, degree, reg_id_list);
         }
     }
 }

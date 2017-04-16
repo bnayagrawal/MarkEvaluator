@@ -2,9 +2,6 @@
 using System.ComponentModel;
 using Microsoft.Office.Interop.Excel;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace markevaluator
 {

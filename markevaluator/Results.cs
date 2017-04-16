@@ -4,17 +4,14 @@ using System.ComponentModel;
 using Excel = Microsoft.Office.Interop.Excel;
 using Word = Microsoft.Office.Interop.Word;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace markevaluator
 {
     class Results
     {
-        BackgroundWorker bgwGenGradeSheet;
+        BackgroundWorker bgwGenResultSheet;
         BackgroundWorker bgwGenAnalysisSheet;
-        BackgroundWorker bgwGenMarkSheet;
+        BackgroundWorker bgwGenGradeSheet;
         BackgroundWorker bgwFetchRegid;
 
         //Variables required till sheet generation
@@ -183,13 +180,13 @@ namespace markevaluator
         }
 
         /// <summary>
-        /// Creates an excel sheet containing grades and gpa of students
+        /// Creates an excel sheet containing grades and gpa of students (Result sheet)
         /// </summary>
         /// <param name="course_code">Course code</param>
         /// <param name="semester">Semester</param>
         /// <param name="year">exam year</param>
         /// <param name="output_folder">output folder to save excel file</param>
-        public void generateGradeSheet(String course_code,int semester,int year, String month, String output_folder, List<long> regIdList = null)
+        public void generateResultSheet(String course_code,int semester,int year, String month, String output_folder, List<long> regIdList = null)
         {
             this.course_code = course_code;
             this.semester = semester;
@@ -199,14 +196,14 @@ namespace markevaluator
             this.regIdList = regIdList; //for custom list of students
             
             //initialize background worker
-            bgwGenGradeSheet = new BackgroundWorker();
-            bgwGenGradeSheet.DoWork += BgwGenGradeSheet_DoWork;
-            bgwGenGradeSheet.RunWorkerCompleted += BgwGenGradeSheet_RunWorkerCompleted;
-            bgwGenGradeSheet.ProgressChanged += BgwGenGradeSheet_ProgressChanged;
+            bgwGenResultSheet = new BackgroundWorker();
+            bgwGenResultSheet.DoWork += bgwGenResultSheet_DoWork;
+            bgwGenResultSheet.RunWorkerCompleted += bgwGenResultSheet_RunWorkerCompleted;
+            bgwGenResultSheet.ProgressChanged += bgwGenResultSheet_ProgressChanged;
 
-            bgwGenGradeSheet.RunWorkerAsync();
-            bgwGenGradeSheet.WorkerReportsProgress = true;
-            bgwGenGradeSheet.WorkerSupportsCancellation = true;
+            bgwGenResultSheet.RunWorkerAsync();
+            bgwGenResultSheet.WorkerReportsProgress = true;
+            bgwGenResultSheet.WorkerSupportsCancellation = true;
         }
 
         /// <summary>
@@ -216,7 +213,7 @@ namespace markevaluator
         /// <param name="semester">Semester</param>
         /// <param name="year">exam year</param>
         /// <param name="output_folder">output folder to save individual marksheet files</param>
-        public void generateMarkSheets(String course_code, int semester, int year,String month, String output_folder, String degree_type, List<long> regIdList = null)
+        public void generateGradeSheets(String course_code, int semester, int year,String month, String output_folder, String degree_type, List<long> regIdList = null)
         {
             this.course_code = course_code;
             this.degree_type = degree_type;
@@ -227,32 +224,32 @@ namespace markevaluator
             this.regIdList = regIdList; //for custom list of students
 
             //initialize background worker
-            bgwGenMarkSheet = new BackgroundWorker();
-            bgwGenMarkSheet.DoWork += BgwGenMarkSheet_DoWork;
-            bgwGenMarkSheet.RunWorkerCompleted += BgwGenMarkSheet_RunWorkerCompleted;
-            bgwGenMarkSheet.ProgressChanged += BgwGenMarkSheet_ProgressChanged;
+            bgwGenGradeSheet = new BackgroundWorker();
+            bgwGenGradeSheet.DoWork += bgwGenGradeSheet_DoWork;
+            bgwGenGradeSheet.RunWorkerCompleted += bgwGenGradeSheet_RunWorkerCompleted;
+            bgwGenGradeSheet.ProgressChanged += bgwGenGradeSheet_ProgressChanged;
 
-            bgwGenMarkSheet.RunWorkerAsync();
-            bgwGenMarkSheet.WorkerReportsProgress = true;
-            bgwGenMarkSheet.WorkerSupportsCancellation = true;
+            bgwGenGradeSheet.RunWorkerAsync();
+            bgwGenGradeSheet.WorkerReportsProgress = true;
+            bgwGenGradeSheet.WorkerSupportsCancellation = true;
         }
 
-        private void BgwGenMarkSheet_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void bgwGenGradeSheet_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             //for one progress bar
             progress_one.Value = e.ProgressPercentage;
         }
 
-        private void BgwGenMarkSheet_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void bgwGenGradeSheet_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             //task completed
             if (error_occured)
-                Windows.generatorWindow.exportCompleted("An error occured while generating individual marksheets!" + ln + "Please see the logs", true);
+                Windows.generatorWindow.exportCompleted("An error occured while generating individual grade sheets!" + ln + "Please see the logs", true);
             else
-                Windows.generatorWindow.exportCompleted("Individual marksheets has been generated!" + ln + ln + "Please find the file in" + ln + output_folder, false);
+                Windows.generatorWindow.exportCompleted("Individual grade sheets has been generated!" + ln + ln + "Please find the file in" + ln + output_folder, false);
         }
 
-        private void BgwGenMarkSheet_DoWork(object sender, DoWorkEventArgs e)
+        private void bgwGenGradeSheet_DoWork(object sender, DoWorkEventArgs e)
         {
             DateTime begin = DateTime.Now;
             try
@@ -297,7 +294,7 @@ namespace markevaluator
                 if (!Directory.Exists(output_folder + "\\" + course_code))
                     Directory.CreateDirectory(output_folder + "\\" + course_code);
 
-                tempProcessLog = "===== GENERATING INDIVIDUAL MARKSHEETS =====" + ln;
+                tempProcessLog = "===== GENERATING INDIVIDUAL GRADE SHEETS =====" + ln;
 
                 //cycle through each registration id
                 foreach(Row row in rows)
@@ -502,7 +499,7 @@ namespace markevaluator
                         txtOutput.ScrollToEnd();
                     }));
 
-                    bgwGenMarkSheet.ReportProgress(Convert.ToInt16(((prog_one_value * 100) / rows.Count)));
+                    bgwGenGradeSheet.ReportProgress(Convert.ToInt16(((prog_one_value * 100) / rows.Count)));
                     tempProcessLog = "";
                     prog_one_value++;
                 }
@@ -544,22 +541,22 @@ namespace markevaluator
             }
         }
 
-        private void BgwGenGradeSheet_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void bgwGenResultSheet_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             //for one progress bar
             progress_one.Value = e.ProgressPercentage;
         }
 
-        private void BgwGenGradeSheet_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void bgwGenResultSheet_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             //task completed
             if (error_occured)
-                Windows.generatorWindow.exportCompleted("An error occured while generating gradesheet!" + ln + "Please see the logs", true);
+                Windows.generatorWindow.exportCompleted("An error occured while generating result sheet!" + ln + "Please see the logs", true);
             else
-                Windows.generatorWindow.exportCompleted("Gradesheet has been generated!" + ln + ln + "Please find the file in" + ln + output_folder, false);
+                Windows.generatorWindow.exportCompleted("Result sheet has been generated!" + ln + ln + "Please find the file in" + ln + output_folder, false);
         }
 
-        private void BgwGenGradeSheet_DoWork(object sender, DoWorkEventArgs e)
+        private void bgwGenResultSheet_DoWork(object sender, DoWorkEventArgs e)
         {
             DateTime begin = DateTime.Now; //to calculate how much time it took to complete operation
             try
@@ -670,7 +667,7 @@ namespace markevaluator
                         txtOutput.ScrollToEnd();
                     }));
 
-                    bgwGenGradeSheet.ReportProgress(Convert.ToInt16(((xrow * 100) / rows.Count)));
+                    bgwGenResultSheet.ReportProgress(Convert.ToInt16(((xrow * 100) / rows.Count)));
                     tempProcessLog = "";
                 }
 
